@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">OvoVision</string>
+
+    <string-array name="model_array">
+        <item>yolov8n</item>
+        <item>yolov8s</item>
+    </string-array>
+
+    <string-array name="cpugpu_array">
+        <item>CPU</item>
+        <item>GPU</item>
+    </string-array>
+
+    <string name="home">Home</string>
+    <string name="scanner">Scanner</string>
+    <string name="records">Records</string>
+    <string name="log_out">Log out</string>
+    <string name="hi">Hi!</string>
+    <string name="please_login_your_information">Please login your information</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="login">Login</string>
+    <string name="new_user">New User?</string>
+    <string name="create_account">Create Account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Signup</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="login_here">Login Here</string>
+    <string name="provide_your_account_s_email_for_which_you_to_reset_your_password">Provide your email account to reset your password</string>
+    <string name="provide_your_email_account_to_reset_your_password">Provide your email account to reset your password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="Record_Date">October 10, 2023</string>
+    <string name="TabLayout_daily">Daily</string>
+    <string name="TabLayout_weekly">Weekly</string>
+    <string name="TabLayout_monthly">Monthly</string>
+    <string name="classified_as">Classified as:</string>
+    <string name="confidences">Confidences:</string>
+    <string name="save">Save</string>
+    <string name="take_a_picture">Detect Egg</string>
+    <string name="good_egg">Good</string>
+    <string name="Date">Date</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="egg_classifier">Egg Classifier</string>
+    <string name="total">Total</string>
+    <string name="_0">0</string>
+    <string name="cracked_egg">Crack</string>
+    <string name="dirty_egg">Dirty</string>
+    <string name="blood_spot">Bloodspot</string>
+    <string name="no_blood_spot">No Bloodspot</string>
+    <string name="info">Info</string>
+    <string name="egg_quality_management_system">(Egg Quality Management System)</string>
+    <string name="GoodEggInfo">\tA good quality egg possesses specific characteristics that set it apart, ensuring it meets the standards for consumption. Understanding what constitutes a good egg is essential for both consumers and those involved in egg production.
+
+\n\t First and foremost, a good quality egg begins with its outer shell. It should be clean, unblemished, and free of any cracks or damage. The shell acts as a protective barrier, safeguarding the eggs contents from potential contaminants. Any compromise in the shells integrity can lead to bacterial infiltration, compromising the eggs safety and freshness.
+
+\n\tA good egg should be entirely devoid of cracks. Even the slightest fracture in the shell can open the door for bacteria to infiltrate the egg, posing a risk to food safety. Quality control measures in egg production are designed to identify and remove cracked eggs from circulation, ensuring only intact eggs reach consumers. Freshness is paramount in determining the quality of an egg. Fresh eggs exhibit a bright, clear egg white and a yolk that stands high and round. As eggs age, the yolk may flatten, and the egg white may thin. Proper storage, ideally in a refrigerator, is key to preserving the freshness and quality of eggs.</string>
+
+
+    <string name="about">
+\n\t Egg Quality Management Systems (EQMS) are used in chicken farms to help poultry farmers sort their eggs into different categories based on their quality and condition. This allows farmers to package and sell their eggs more efficiently,
+and to avoid selling eggs that are not suitable for consumption. Egg classifying systems are used in chicken farms to help poultry farmers sort their eggs into different categories based on their quality and condition. This allows farmers to package and sell their eggs more efficiently, and to avoid selling eggs that are not suitable for consumption.
+
+\n\nEgg Quality Management Systems (EQMS) offer a number of benefits to poultry farmers, including:
+
+\n\nQuality: Eggs are also sorted based on their quality. Eggs with cracks, bloodspots, or other defects are typically discarded. Eggs that are in good condition are packaged and sold for human consumption.
+\n\nIncreased efficiency: Egg classifying systems can help farmers to sort their eggs more quickly and efficiently than traditional manual sorting methods. This can free up farmers time to focus on other tasks.
+\n\nImproved quality control: Egg classifying systems can help farmers to ensure that only the highest quality eggs are sold to consumers. This can help to improve their reputation and customer satisfaction.
+\n\nReduced waste: Egg classifying systems can help farmers to reduce the amount of waste eggs they produce. This can save them money and help to reduce their environmental impact.
+
+\n\nHow Egg Quality Management Systems (EQMS) Work ?
+
+\n\n\tEgg Quality Management Systems (EQMS) typically work by using a cameras to inspect each egg using RGB color. The sensors can measure the quality and color based on the egg captured. The cameras can be used to detect good egg, cracks, bloodspots, and other defects.
+Once the egg has been inspected, the classifying system will sort it into the appropriate category. Eggs that are in good condition will be packaged and sold for human consumption. Eggs that are cracked, have bloodspots, or other defects will be discarded.
+
+    </string>
+
+    <string name="CrackEggInfo"> \tThe Impact of Cracks on Egg Quality
+
+     Eggs, a fundamental component of many cuisines worldwide, hold a significant place in our diets. However, not all eggs are equal in terms of quality. One of the most critical factors that distinguish a good egg from a subpar one is the presence of cracks on its shell. Cracks, whether minuscule or substantial, have far-reaching implications on an eggs safety, freshness, and overall suitability for consumption.
+    \n\tA pristine, unblemished shell is the first indicator of a high-quality egg. It acts as a natural fortress, guarding the delicate contents from potential contaminants. Any fissure, no matter how slight, compromises this defense mechanism, rendering the egg vulnerable to bacterial infiltration. As a result, eggs with cracks are deemed unsafe for consumption, as they pose a heightened risk of foodborne illness.
+    \n\tCracked eggs are also problematic from a practical standpoint. They are more challenging to handle and are prone to messy spills. In commercial egg production, they are often removed from circulation to prevent cross-contamination and maintain a high standard of hygiene. This extra handling increases costs and labor for producers, underscoring the economic impact of cracks on the industry.
+    </string>
+
+    <string name="DirtyEggInfo"> \tEggs, revered for their versatility and nutritional value, are a cornerstone of countless dishes worldwide. However, not all eggs are created equal, and the presence of dirt on an eggs shell significantly impacts its quality. Understanding the implications of dirty eggs is paramount for both consumers and producers, as it affects safety, hygiene, and overall suitability for consumption.
+At its core, a clean egg shell is not merely an aesthetic preference but a critical factor in ensuring food safety. Any presence of dirt, debris, or foreign matter on the shell can introduce harmful bacteria into the eggs interior. This contamination poses a serious health risk to consumers, potentially leading to foodborne illnesses. As a result, strict quality control measures are employed in egg production to detect and eliminate dirty eggs from the supply chain.
+    \n\tFrom a practical standpoint, dirty eggs present challenges in handling and processing. They require extra cleaning and sanitation efforts, adding to the labor and costs associated with egg production. This underscores the economic impact of dirty eggs on both producers and consumers, as it contributes to increased prices and potentially lower overall product quality.
+    </string>
+
+    <string name="NoBloodSpotInfo"> \tEggs without bloodspots are considered the epitome of quality in the egg industry. A bloodspot-free egg signifies that the egg was laid under optimal conditions, without any complications or irregularities. It serves as a testament to the health and well-being of the laying hen, ensuring consumers receive eggs of the highest standard. For this reason, producers implement rigorous quality control measures to detect and remove eggs with bloodspots from circulation.
+    \n\tEggs without bloodspots also contribute to the overall efficiency of the production process. They require less inspection and handling, reducing the time and resources needed to ensure product quality. This efficiency not only benefits producers but also helps maintain reasonable prices for consumers.
+    </string>
+
+    <string name="BloodSpotInfo"> \tA bloodspot in an egg is a result of a ruptured blood vessel in the hens ovary during the egg-laying process. While it may initially be perceived as an aesthetic flaw, its important to note that eggs with bloodspots are perfectly safe to consume. This occurrence is natural and does not indicate any health risks. However, in commercial egg production, these eggs are often identified and removed from circulation for aesthetic reasons.
+    \n\tFor consumers, encountering a bloodspot may lead to questions or concerns about the eggs safety and quality. Its crucial to emphasize that eggs with bloodspots are entirely safe to eat. The occurrence is relatively rare and does not impact the taste or nutritional value of the egg. Educating consumers about the nature of bloodspots is an important step in dispelling any misconceptions. The presence of bloodspots can serve as a learning opportunity about the natural processes of egg production. It offers a window into the biological complexities that occur within a laying hen. Understanding the origin of bloodspots fosters a deeper appreciation for the intricate nature of egg-laying.
+    </string>
+</resources>

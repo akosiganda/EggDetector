@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#4CAF50</color>
+    <color name="blue">#03A9F4</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="dark_turquoise">#264B52</color>
+    <color name="greenish_blue">#264F36</color>
+    <color name="dark_cyan_blue">#26524F</color>
+    <color name="bluish_green">#29454D</color>
+    <color name="medium_dark_blue_green">#385B64</color>
+    <color name="blue_green">#466D79</color>
+    <color name="blue_gray">#A2B3CB</color>
+    <color name="brighter_green">#338955</color>
+    <color name="bright_blue_green">#00CCB3</color>
+    <color name="brighter_blue_green">#00E5FF</color>
+    <color name="blue_green2">#00CCFF</color>
+    <color name="teal">#00B3A5</color>
+    <color name="dark_cyan">#008B8B</color>
+    <color name="deep_aqua">#007A74</color>
+    <color name="ceruleanBlue">#0EAACC</color>
+    <color name="turquoise">#06CBC1</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_20">#7BD7AF</color>
+    <color name="paleBlue">#CCD2EFF4</color>
+    <color name="paleCeruleanBlue">#370EAACC</color>
+    <color name="lighter_turquoise">#3DEDE5</color>
+    <color name="whitish_turquoise">#A4EDEB</color>
+    <color name="whitish_paleBlue">#88D2EFF4</color>
+    <color name="btn">#f0ffff</color>
+    <color name="brightSapphireBlue">#0080FF</color>
+</resources>

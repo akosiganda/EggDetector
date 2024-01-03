@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "893840494134",
+    "project_id": "ovovision2",
+    "storage_bucket": "ovovision2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893840494134:android:3fe78df906f71fe4089297",
+        "android_client_info": {
+          "package_name": "com.example.eggdetector"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI5IMJrfpRACCTqE3E9KVCy-TcJFEjHbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893840494134:android:98d245bf044c38d1089297",
+        "android_client_info": {
+          "package_name": "com.example.ovovision"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI5IMJrfpRACCTqE3E9KVCy-TcJFEjHbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
