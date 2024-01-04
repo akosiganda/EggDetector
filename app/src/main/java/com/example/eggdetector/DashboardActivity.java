@@ -208,6 +208,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Bar Chart
         // change code the below if the database has values like this showBarChart(values[0], values[1], values[2], values[3], values[4])
         showBarChart(55f, 25f, 35f, 45f, 15f);
+        // pull request try
     }
 
     void updateDate() {
