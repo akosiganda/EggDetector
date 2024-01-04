@@ -3,6 +3,7 @@ package com.example.eggdetector;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
@@ -43,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     private BarChart barChart;
     private List<String> xAxisValues = Arrays.asList("Good", "Crack", "Dirty", "No Blood spot", "Blood Spot");
     private ArrayList <BarEntry> entries = new ArrayList<>();
+    private float[] values = new float[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,6 @@ public class DashboardActivity extends AppCompatActivity {
         ProgressBar crackProgressBar = findViewById(R.id.crackProgress);
         ProgressBar noBSProgressBar = findViewById(R.id.noBSProgress);
         ProgressBar bloodSpotProgressBar = findViewById(R.id.bloodSpotProgress);
-
-        // Bar Chart
-        //  TODO: need to make the data of the barchart dynamic and fetch the data from the database
-
-        showBarChart();
-        // check push
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
@@ -154,6 +150,7 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalGood.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
+                values[0] = intVal;
                 binding.totalGood.setText(String.valueOf(intVal));
                 binding.totalGoodlbl.setText(String.valueOf(intVal));
                 updateProgressBar(goodProgressBar, intVal);
@@ -163,6 +160,7 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalCracked.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
+                values[1] = intVal;
                 binding.totalCracked.setText(String.valueOf(intVal));
                 binding.totalCrackedlbl.setText(String.valueOf(intVal));
                 updateProgressBar(crackProgressBar, intVal);
@@ -171,6 +169,7 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalDirty.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
+                values[2] = intVal;
                 binding.totalDirty.setText(String.valueOf(intVal));
                 binding.totalDirtylbl.setText(String.valueOf(intVal));
                 updateProgressBar(dirtyProgressBar, intVal);
@@ -179,6 +178,7 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalBloodspot.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
+                values[3] = intVal;
                 binding.totalBloodSpot.setText(String.valueOf(intVal));
                 binding.totalBloodSpotlbl.setText(String.valueOf(intVal));
                 updateProgressBar(bloodSpotProgressBar, intVal);
@@ -188,6 +188,7 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalNoBloodspot.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
+                values[4] = intVal;
                 binding.totalNoBloodSpot.setText(String.valueOf(intVal));
                 binding.totalNoBSlbl.setText(String.valueOf(intVal));
                 updateProgressBar(noBSProgressBar, intVal);
@@ -204,7 +205,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         viewModel.getTransaction(calendar);
 
-
+        // Bar Chart
+        // change code the below if the database has values like this showBarChart(values[0], values[1], values[2], values[3], values[4])
+        showBarChart(55f, 25f, 35f, 45f, 15f);
     }
 
     void updateDate() {
@@ -222,12 +225,12 @@ public class DashboardActivity extends AppCompatActivity {
         progressBar.setMax(150); // Set an appropriate max value
         progressBar.setProgress((count * 100) / progressBar.getMax()); // Calculate the progress
     }
-    private void showBarChart() {
-        entries.add(new BarEntry(0, 45f));
-        entries.add(new BarEntry(1, 35f));
-        entries.add(new BarEntry(2, 25f));
-        entries.add(new BarEntry(3, 55f));
-        entries.add(new BarEntry(4, 30f));
+    private void showBarChart(float good, float crack, float dirty, float noBloodSpot, float bloodSpot) {
+        entries.add(new BarEntry(0, good));
+        entries.add(new BarEntry(1, crack));
+        entries.add(new BarEntry(2, dirty));
+        entries.add(new BarEntry(3, noBloodSpot));
+        entries.add(new BarEntry(4, bloodSpot));
 
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
