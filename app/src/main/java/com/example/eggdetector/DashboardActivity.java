@@ -68,32 +68,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Bar Chart
         //  TODO: need to make the data of the barchart dynamic and fetch the data from the database
-        entries.add(new BarEntry(0, 45f));
-        entries.add(new BarEntry(1, 35f));
-        entries.add(new BarEntry(2, 25f));
-        entries.add(new BarEntry(3, 55f));
-        entries.add(new BarEntry(4, 30f));
 
-        YAxis yAxis = barChart.getAxisLeft();
-        yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(100f);
-        yAxis.setAxisLineWidth(2f);
-        yAxis.setAxisLineColor(Color.BLUE);
-        yAxis.setLabelCount(10);
-
-        BarDataSet dataSet = new BarDataSet(entries, "Eggs");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-
-        BarData data = new BarData(dataSet);
-        barChart.setData(data);
-
-        barChart.getDescription().setEnabled(false);
-        barChart.invalidate();
-
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
-        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        barChart.getXAxis().setGranularity(1f);
-        barChart.getXAxis().setGranularityEnabled(true);
+        showBarChart();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
@@ -244,6 +220,34 @@ public class DashboardActivity extends AppCompatActivity {
     private void updateProgressBar(ProgressBar progressBar, int count) {
         progressBar.setMax(150); // Set an appropriate max value
         progressBar.setProgress((count * 100) / progressBar.getMax()); // Calculate the progress
+    }
+    private void showBarChart() {
+        entries.add(new BarEntry(0, 45f));
+        entries.add(new BarEntry(1, 35f));
+        entries.add(new BarEntry(2, 25f));
+        entries.add(new BarEntry(3, 55f));
+        entries.add(new BarEntry(4, 30f));
+
+        YAxis yAxis = barChart.getAxisLeft();
+        yAxis.setAxisMinimum(0f);
+        yAxis.setAxisMaximum(100f);
+        yAxis.setAxisLineWidth(2f);
+        yAxis.setAxisLineColor(Color.BLUE);
+        yAxis.setLabelCount(10);
+
+        BarDataSet dataSet = new BarDataSet(entries, "Eggs");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        BarData data = new BarData(dataSet);
+        barChart.setData(data);
+
+        barChart.getDescription().setEnabled(false);
+        barChart.invalidate();
+
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.getXAxis().setGranularity(1f);
+        barChart.getXAxis().setGranularityEnabled(true);
     }
 
     @Override
