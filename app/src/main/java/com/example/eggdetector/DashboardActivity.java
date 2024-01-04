@@ -70,6 +70,7 @@ public class DashboardActivity extends AppCompatActivity {
         //  TODO: need to make the data of the barchart dynamic and fetch the data from the database
 
         showBarChart();
+        // check push
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
