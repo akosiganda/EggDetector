@@ -67,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
         ProgressBar bloodSpotProgressBar = findViewById(R.id.bloodSpotProgress);
 
         // Bar Chart
+        //  TODO: need to make the data of the barchart dynamic and fetch the data from the database
         entries.add(new BarEntry(0, 45f));
         entries.add(new BarEntry(1, 35f));
         entries.add(new BarEntry(2, 25f));
