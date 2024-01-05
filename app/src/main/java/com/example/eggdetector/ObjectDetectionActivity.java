@@ -96,6 +96,13 @@ public class ObjectDetectionActivity extends AppCompatActivity implements Surfac
 
         reload();
 
+        bottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
     }
     private void reload()
     {
