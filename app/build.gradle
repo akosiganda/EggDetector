@@ -63,6 +63,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-database:20.3.0")
     // MPChart dependency
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    // GSON Dependency
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

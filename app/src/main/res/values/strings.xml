@@ -11,6 +11,14 @@
         <item>GPU</item>
     </string-array>
 
+    <string-array name="egg_types">
+        <item>Good</item>
+        <item>Crack</item>
+        <item>Dirty</item>
+        <item>Blood Spot</item>
+        <item>Deformed</item>
+    </string-array>
+
     <string name="home">Home</string>
     <string name="scanner">Scanner</string>
     <string name="records">Records</string>
