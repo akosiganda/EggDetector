@@ -122,6 +122,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         reportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Perform saving of data to the database here
+
                 Toast.makeText(view.getContext(), "Reports saved", Toast.LENGTH_SHORT).show();
                 clearDataFromSharedPref();
                 dismiss();
