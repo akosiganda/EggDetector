@@ -38,25 +38,32 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.binding.transactionCategory.setText(transaction.getType());
         holder.binding.transactionDate.setText(Helper.formatDate(transaction.getDate()));
+        holder.binding.transactionCount.setText(String.valueOf(transaction.getCount()));
 
         if (transaction.getType().equals(Constants.CRACKED)) {
             holder.binding.categoryIcon.setImageResource(R.drawable.crackegg);
             holder.binding.categoryIcon.setBackgroundTintList(context.getColorStateList(R.color.paleBlue));
+            holder.binding.transactionCount.setTextColor(context.getColor(R.color.blue));
         } else if (transaction.getType().equals(Constants.GOOD)) {
             holder.binding.categoryIcon.setImageResource(R.drawable.goodegg);
             holder.binding.categoryIcon.setBackgroundTintList(context.getColorStateList(R.color.paleBlue));
+            holder.binding.transactionCount.setTextColor(context.getColor(R.color.brightSapphireBlue));
         } else if (transaction.getType().equals(Constants.DIRTY)) {
             holder.binding.categoryIcon.setImageResource(R.drawable.dirtyegg);
             holder.binding.categoryIcon.setBackgroundTintList(context.getColorStateList(R.color.paleBlue));
+            holder.binding.transactionCount.setTextColor(context.getColor(R.color.teal));
         } else if (transaction.getType().equals(Constants.BLOOD_SPOT)) {
             holder.binding.categoryIcon.setImageResource(R.drawable.bloodspot);
             holder.binding.categoryIcon.setBackgroundTintList(context.getColorStateList(R.color.paleBlue));
-        } else if (transaction.getType().equals(Constants.NO_BLOOD_SPOT)) {
-            holder.binding.categoryIcon.setImageResource(R.drawable.nobloodspot);
+            holder.binding.transactionCount.setTextColor(context.getColor(R.color.ceruleanBlue));
+        } else if (transaction.getType().equals(Constants.DEFORMED)) {
+            holder.binding.categoryIcon.setImageResource(R.drawable.deformed);
             holder.binding.categoryIcon.setBackgroundTintList(context.getColorStateList(R.color.paleBlue));
-        }else {
-
+            holder.binding.transactionCount.setTextColor(context.getColor(R.color.deep_aqua));
+        } else {
+            // Handle the else case if needed
         }
+
 
         holder.itemView.setOnLongClickListener(view -> {
             AlertDialog deleteDialog = new AlertDialog.Builder(context).create();

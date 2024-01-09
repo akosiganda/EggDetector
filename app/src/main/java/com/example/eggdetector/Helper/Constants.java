@@ -19,6 +19,8 @@ public class Constants {
     public static String BLOOD_SPOT = "BLOODSPOT";
     public static String NO_BLOOD_SPOT = "NO BLOODSPOT";
 
+    public static String DEFORMED = "DEFORMED";
+
     public static final String[] CLASSES = {"Good Egg", "Crack Egg", "Dirty Egg", "Unknown"};
 
     public static ArrayList<EggType> categories;

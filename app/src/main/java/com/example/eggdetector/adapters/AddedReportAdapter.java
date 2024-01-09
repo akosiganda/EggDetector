@@ -21,6 +21,10 @@ public class AddedReportAdapter extends RecyclerView.Adapter<AddedReportAdapter.
     private ArrayList<AddedReportModel> addedReportModels;
     private OnItemClickListener listener;
 
+    public ArrayList<AddedReportModel> getReports() {
+        return addedReportModels;
+    }
+
     public interface OnItemClickListener {
         void increaseCount(int position);
         void decreaseCount(int position);
