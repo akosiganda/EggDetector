@@ -6,8 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.eggdetector.models.AddedReportModel;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -19,7 +23,7 @@ public class MainViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> totalCracked = new MutableLiveData<>();
     public MutableLiveData<Integer> totalDirty = new MutableLiveData<>();
     public MutableLiveData<Integer> totalBloodspot = new MutableLiveData<>();
-    public MutableLiveData<Integer> totalNoBloodspot = new MutableLiveData<>();
+    public MutableLiveData<Integer> totalDeformed = new MutableLiveData<>();
     public MutableLiveData<Integer> totalAmount = new MutableLiveData<>();
 
     private Realm realm;
@@ -28,12 +32,13 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         Realm.init(application);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-                .schemaVersion(1)
-                .migration(new MyRealmMigration())
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("myrealm.realm")
+                .schemaVersion(2) // Increment the version number
+                .migration(new MyRealmMigration()) // Set your migration class
                 .build();
 
-        Realm.setDefaultConfiguration(realmConfig);
+        Realm.setDefaultConfiguration(config);
         setupDatabase();
     }
 
@@ -48,7 +53,7 @@ public class MainViewModel extends AndroidViewModel {
         int cracked = 0;
         int dirty = 0;
         int bloodspot = 0;
-        int nobloodspot = 0;
+        int deformed = 0;
         int total = 0;
 
         RealmResults<Transaction> newTransactions = null;
@@ -87,10 +92,10 @@ public class MainViewModel extends AndroidViewModel {
                     .sum("count")
                     .intValue();
 
-            nobloodspot = realm.where(Transaction.class)
+            deformed = realm.where(Transaction.class)
                     .greaterThanOrEqualTo("date", calendar.getTime())
                     .lessThan("date", new Date(calendar.getTime().getTime() + (24 * 60 * 60 * 1000)))
-                    .equalTo("type", Constants.NO_BLOOD_SPOT)
+                    .equalTo("type", Constants.DEFORMED)
                     .sum("count")
                     .intValue();
 
@@ -141,10 +146,10 @@ public class MainViewModel extends AndroidViewModel {
                     .sum("count")
                     .intValue();
 
-            nobloodspot = realm.where(Transaction.class)
+            deformed = realm.where(Transaction.class)
                     .greaterThanOrEqualTo("date", startDate)
                     .lessThan("date", endDate)
-                    .equalTo("type", Constants.NO_BLOOD_SPOT)
+                    .equalTo("type", Constants.DEFORMED)
                     .sum("count")
                     .intValue();
 
@@ -196,10 +201,10 @@ public class MainViewModel extends AndroidViewModel {
                     .sum("count")
                     .intValue();
 
-            nobloodspot = realm.where(Transaction.class)
+            deformed = realm.where(Transaction.class)
                     .greaterThanOrEqualTo("date", startTime)
                     .lessThan("date", endTime)
-                    .equalTo("type", Constants.NO_BLOOD_SPOT)
+                    .equalTo("type", Constants.DEFORMED)
                     .sum("count")
                     .intValue();
 
@@ -214,44 +219,44 @@ public class MainViewModel extends AndroidViewModel {
         totalCracked.setValue((int) cracked);
         totalDirty.setValue((int) dirty);
         totalBloodspot.setValue((int) bloodspot);
-        totalNoBloodspot.setValue((int) nobloodspot);
+        totalDeformed.setValue((int) deformed);
         totalAmount.setValue((int) total);
         transaction.setValue(newTransactions);
     }
-    public void createTransaction(String type) {
+    public void createTransactions(List<AddedReportModel> reports) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        Transaction existingTransaction = realm.where(Transaction.class)
-                .equalTo("type", type)
-                .greaterThanOrEqualTo("date", calendar.getTime())
-                .lessThan("date", new Date(calendar.getTime().getTime() + (24 * 60 * 60 * 1000)))
-                .findFirst();
+        List<Transaction> newTransactions = new ArrayList<>();
 
-        if (existingTransaction == null) {
+        for (AddedReportModel report : reports) {
             Transaction newTransaction = new Transaction();
             newTransaction.setDate(new Date());
-            newTransaction.setType(type);
-            newTransaction.setCount(1); // Increment the count for each type
+            newTransaction.setType(report.getEggQuality());
+            newTransaction.setCount(report.getCount());
             newTransaction.setDate(calendar.getTime());
-            newTransaction.setId(calendar.getTime().getTime());
-            addTransaction(newTransaction);
-        } else {
-            realm.beginTransaction();
-            existingTransaction.setCount(existingTransaction.getCount() + 1); // Increment the count
-            realm.commitTransaction();
+            newTransaction.setId(generateUniqueId());
+
+            newTransactions.add(newTransaction);
         }
 
-        // Fetch the transactions again
-        getTransaction(calendar);
+        addTransactionsToRealm(newTransactions);
+    }
+    private long generateUniqueId() {
+        return System.currentTimeMillis();
     }
 
+    public void addTransactionsToRealm(List<Transaction> transactions) {
+        realm.beginTransaction();
+        realm.insertOrUpdate(transactions);
+        realm.commitTransaction();
+    }
     public void addTransaction(Transaction transaction) {
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(transaction);
+        realm.insertOrUpdate(transaction);
         realm.commitTransaction();
     }
 
@@ -263,5 +268,11 @@ public class MainViewModel extends AndroidViewModel {
     }
     private void setupDatabase() {
         realm = Realm.getDefaultInstance();
+    }
+
+    public void addTransactionsFromReportList(ArrayList<Transaction> finalReport) {
+        realm.beginTransaction();
+        realm.insertOrUpdate(finalReport);
+        realm.commitTransaction();
     }
 }

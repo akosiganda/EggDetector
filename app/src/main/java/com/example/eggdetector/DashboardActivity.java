@@ -33,16 +33,15 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.Inflater;
 
 public class DashboardActivity extends AppCompatActivity {
 
     ActivityDashboardBinding binding;
-
     MainViewModel viewModel;
-
     Calendar calendar;
     private BarChart barChart;
-    private List<String> xAxisValues = Arrays.asList("Good", "Crack", "Dirty", "No Blood spot", "Blood Spot");
+    private List<String> xAxisValues = Arrays.asList("Good", "Crack", "Dirty", "Deformed", "Blood Spot");
     private ArrayList <BarEntry> entries = new ArrayList<>();
     private float[] values = new float[5];
 
@@ -53,7 +52,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("EQMS");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("EGGIE");
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
@@ -178,22 +177,24 @@ public class DashboardActivity extends AppCompatActivity {
         viewModel.totalBloodspot.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
-                values[3] = intVal;
+                values[4] = intVal;
                 binding.totalBloodSpot.setText(String.valueOf(intVal));
                 binding.totalBloodSpotlbl.setText(String.valueOf(intVal));
                 updateProgressBar(bloodSpotProgressBar, intVal);
             }
         });
 
-        viewModel.totalNoBloodspot.observe(this, new Observer<Integer>() {
+        viewModel.totalDeformed.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer intVal) {
-                values[4] = intVal;
+                values[3] = intVal;
+                updateUI();
                 binding.totalNoBloodSpot.setText(String.valueOf(intVal));
                 binding.totalNoBSlbl.setText(String.valueOf(intVal));
                 updateProgressBar(noBSProgressBar, intVal);
             }
         });
+
 
         viewModel.totalAmount.observe(this, new Observer<Integer>() {
             @Override
@@ -204,11 +205,8 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         viewModel.getTransaction(calendar);
+        showBarChart(values[0], values[1], values[2], values[3], values[4]);
 
-        // Bar Chart
-        // change code the below if the database has values, like this showBarChart(values[0], values[1], values[2], values[3], values[4])
-        showBarChart(55f, 25f, 35f, 45f, 15f);
-        // new pull request trying again with a barChart branch
     }
 
     void updateDate() {
@@ -219,18 +217,23 @@ public class DashboardActivity extends AppCompatActivity {
         }else if(Constants.SELECTED_TAB == Constants.WEEKLY) {
             binding.currentDate.setText(Helper.formatDateWeekly(calendar.getTime()));
         }
+
         viewModel.getTransaction(calendar);
+    }
+    private void updateUI() {
+        // Update other UI components if necessary
+        showBarChart(values[0], values[1], values[2], values[3], values[4]);
     }
 
     private void updateProgressBar(ProgressBar progressBar, int count) {
         progressBar.setMax(150); // Set an appropriate max value
         progressBar.setProgress((count * 100) / progressBar.getMax()); // Calculate the progress
     }
-    private void showBarChart(float good, float crack, float dirty, float noBloodSpot, float bloodSpot) {
+    private void showBarChart(float good, float crack, float dirty, float deformed, float bloodSpot) {
         entries.add(new BarEntry(0, good));
         entries.add(new BarEntry(1, crack));
         entries.add(new BarEntry(2, dirty));
-        entries.add(new BarEntry(3, noBloodSpot));
+        entries.add(new BarEntry(3, deformed));
         entries.add(new BarEntry(4, bloodSpot));
 
         YAxis yAxis = barChart.getAxisLeft();

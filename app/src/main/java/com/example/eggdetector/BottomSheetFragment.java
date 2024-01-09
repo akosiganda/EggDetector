@@ -1,6 +1,7 @@
 package com.example.eggdetector;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +16,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eggdetector.Helper.Constants;
+import com.example.eggdetector.Helper.MainViewModel;
+import com.example.eggdetector.Helper.Transaction;
 import com.example.eggdetector.adapters.AddedReportAdapter;
 import com.example.eggdetector.models.AddedReportModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -26,6 +31,12 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.realm.Realm;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -36,6 +47,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private ImageButton addReportEgg;
     private ArrayList<AddedReportModel> reports;
     String eggQualitySelected = null;
+    MainViewModel viewModel;
+    Transaction transaction;
+
 
     @Nullable
     @Override
@@ -55,6 +69,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         addReportEgg = view.findViewById(R.id.addReportEgg);
 
         loadDataFromSharedPref();
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        transaction = new Transaction();
 
         ArrayAdapter<String> eggQualityArray = new ArrayAdapter<>(view.getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, eggQualityTypes);
         eggQualityATV.setAdapter(eggQualityArray);
@@ -108,7 +125,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     adapter.notifyItemChanged(position);
                     saveToSharedPref();
                 }
-
             }
 
             @Override
@@ -118,41 +134,119 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 saveToSharedPref();
             }
         });
-        
+
         reportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform saving of data to the database here
+                Calendar calendar = Calendar.getInstance();
 
+                // Retrieve data from the AddedReportAdapter
+                AddedReportAdapter adapter = (AddedReportAdapter) reportLists.getAdapter();
+                ArrayList<AddedReportModel> reportModels = adapter.getReports();
+
+                // Create a map to store counts for each egg quality type
+                Map<String, Integer> countMap = new HashMap<>();
+                for (AddedReportModel model : reportModels) {
+                    countMap.put(model.getEggQuality(), model.getCount());
+                }
+
+                // Retrieve data from the reportLists
+                ArrayList<Transaction> finalReport = new ArrayList<>();
+
+                // Iterate through all egg quality types
+                long baseId = calendar.getTime().getTime();
+                for (String eggQualityType : eggQualityTypes) {
+                    Integer count = countMap.get(eggQualityType);
+                    if (count != null && count > 0) {
+                        Transaction transaction = new Transaction();
+
+                        // Map egg quality to transaction type
+                        switch (eggQualityType) {
+                            case "Good":
+                                transaction.setType(Constants.GOOD);
+                                break;
+                            case "Crack":
+                                transaction.setType(Constants.CRACKED);
+                                break;
+                            case "Dirty":
+                                transaction.setType(Constants.DIRTY);
+                                break;
+                            case "Blood Spot":
+                                transaction.setType(Constants.BLOOD_SPOT);
+                                break;
+                            case "Deformed":
+                                transaction.setType(Constants.DEFORMED);
+                                break;
+                        }
+
+                        transaction.setDate(new Date());
+                        transaction.setCount(count);
+                        transaction.setId(baseId++);
+                        finalReport.add(transaction);
+                    }
+                }
+
+                // Save the final report to SharedPreferences
+                saveToSharedPref(finalReport);
+
+                // Save the final report to Realm
+                saveToRealm(finalReport);
                 Toast.makeText(view.getContext(), "Reports saved", Toast.LENGTH_SHORT).show();
                 clearDataFromSharedPref();
                 dismiss();
+
+                // Assuming you want to add the transactions to the ViewModel and open RecordsActivity
+                viewModel.addTransactionsFromReportList(finalReport);
+                Intent intent = new Intent(getContext(), RecordsActivity.class);
+                startActivity(intent);
             }
         });
     }
+
     private void saveToSharedPref() {
         SharedPreferences preferences = getContext().getSharedPreferences("shared pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
+
+        // Convert the entire reports list to JSON
         String json = gson.toJson(reports);
-        editor.putString("items", json);
+
+        editor.putString("addedReports", json);
         editor.apply();
     }
+
+    private void saveToSharedPref(ArrayList<Transaction> finalReport) {
+        SharedPreferences preferences = getContext().getSharedPreferences("shared pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+
+        // Convert the final report list to JSON
+        String json = gson.toJson(finalReport);
+
+        editor.putString("finalReport", json);
+        editor.apply();
+    }
+
     private void loadDataFromSharedPref() {
         SharedPreferences preferences = getContext().getSharedPreferences("shared pref", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = preferences.getString("items", null);
-        Type type = new TypeToken<ArrayList<AddedReportModel>>() {}.getType();
+        String json = preferences.getString("addedReports", null);
+        Type type = new TypeToken<ArrayList<AddedReportModel>>() {
+        }.getType();
         reports = gson.fromJson(json, type);
 
-        if (reports == null || reports.isEmpty()) {
+        if (reports == null) {
             reports = new ArrayList<>();
         }
+    }
+
+    private void saveToRealm(ArrayList<Transaction> finalReport) {
+        viewModel.addTransactionsFromReportList(finalReport);
     }
     private void clearDataFromSharedPref() {
         SharedPreferences preferences = getContext().getSharedPreferences("shared pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.remove("items");
+        editor.remove("addedReports");
         editor.apply();
     }
 }

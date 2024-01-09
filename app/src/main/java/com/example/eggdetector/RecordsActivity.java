@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 import io.realm.RealmResults;
@@ -123,20 +124,32 @@ public class RecordsActivity extends AppCompatActivity {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.transaction.observe(this, new Observer<RealmResults<Transaction>>() {
+        viewModel.transaction.observe(this, new Observer<RealmResults<Transaction>>(){
             @Override
             public void onChanged(RealmResults<Transaction> transactions) {
                 TransactionAdapter transactionsAdapter = new TransactionAdapter(RecordsActivity.this, transactions);
                 binding.recyclerView.setAdapter(transactionsAdapter);
+
                 if (transactions.size() > 0) {
                     binding.emptyState.setVisibility(View.GONE);
                 } else {
                     binding.emptyState.setVisibility(View.VISIBLE);
                 }
+
+                displayTransactions(transactions);
             }
         });
 
         viewModel.getTransaction(calendar);
+    }
+    private void displayTransactions(List<Transaction> transactions) {
+        // Iterate through transactions and update UI accordingly
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Transaction transaction : transactions) {
+            stringBuilder.append("Type: ").append(transaction.getType()).append(", Count: ").append(transaction.getCount()).append("\n");
+            // Add other details as needed
+        }
+
     }
 
     void updateDate() {
